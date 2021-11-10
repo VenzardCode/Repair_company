@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { CommonModule } from '@angular/common';
 import {RouterModule, Routes } from '@angular/router';
 import {RegisterComponent} from "./register.component";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+
 
 const routes:Routes=[
   {
@@ -13,8 +19,14 @@ const routes:Routes=[
 @NgModule({
   declarations: [RegisterComponent],
   imports: [
+    FormsModule,
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MatInputModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
 
   ]
 })

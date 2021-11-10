@@ -1,1 +1,66 @@
-<p>register works!</p>
+<div class="wrapper">
+
+  <form [formGroup]="RegisterForm"  (ngSubmit)="onSubmit()" class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Name</mat-label>
+      <input [formControlName]="'name'" type="email" matInput placeholder="Ex. pat@example.com">
+      <mat-error *ngIf=" RegisterForm.controls['name'].touched && RegisterForm.controls['name'].hasError('maxLength') ">
+        Name is too <strong>long</strong>
+      </mat-error>
+      <mat-error *ngIf="RegisterForm.controls['email'].touched && RegisterForm.controls['email'].hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Email</mat-label>
+      <input [formControlName]="'email'" type="email" matInput placeholder="Ex. pat@example.com">
+      <mat-error *ngIf=" RegisterForm.controls['email'].touched && RegisterForm.controls['email'].hasError('email') ">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="RegisterForm.controls['email'].touched && RegisterForm.controls['email'].hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input [formControlName]="'password'"  matInput [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf=" RegisterForm.controls['password'].hasError('pattern')">
+        Password error
+      </mat-error>
+      <mat-error *ngIf=" RegisterForm.controls['password'].hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill" >
+      <mat-label>Phone</mat-label>
+      <input [formControlName]="'phone'" matInput type="tel"  placeholder="971749324">
+      <span matPrefix>+380&nbsp;</span>
+      <mat-icon matSuffix>phone</mat-icon>
+      <mat-error *ngIf=" RegisterForm.controls['phone'].hasError('required')">
+        Phone is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf=" RegisterForm.controls['phone'].hasError('minLength')||RegisterForm.controls['phone'].hasError('maxLength') ">
+        Phone is <strong>8</strong> digits
+      </mat-error>
+    </mat-form-field>
+
+    <div class="button-wrapper">
+      <button mat-stroked-button color="primary"  type="submit">Register
+        <mat-spinner></mat-spinner>
+      </button>
+      <button mat-stroked-button color="primary"(click)="navigateTo('login')" type="button">Login</button>
+    </div>
+  </form>
+<!--  <p>Form value: {{ RegisterForm.value }}</p>-->
+<!--  <p>Form status: {{ RegisterForm.status}}</p>-->
+<!--  <p>Form valid: {{ RegisterForm.valid}}</p>-->
+
+</div>
+
+
