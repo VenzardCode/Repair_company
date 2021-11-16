@@ -4,6 +4,7 @@
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Name</mat-label>
       <input [formControlName]="'name'" matInput >
+      <mat-icon matSuffix>person</mat-icon>
       <mat-error *ngIf=" RegisterForm.controls['name'].touched && RegisterForm.controls['name'].hasError('maxLength') ">
         Name is too <strong>long</strong>
       </mat-error>
@@ -15,6 +16,7 @@
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Email</mat-label>
       <input [formControlName]="'email'" type="email" matInput placeholder="Ex. pat@example.com">
+      <mat-icon matSuffix>alternate_email</mat-icon>
       <mat-error *ngIf=" RegisterForm.controls['email'].touched && RegisterForm.controls['email'].hasError('pattern') ">
         Please enter a valid email address
       </mat-error>
@@ -40,18 +42,16 @@
 
     <mat-form-field class="example-full-width" appearance="fill" >
       <mat-label>Phone</mat-label>
-      <input [formControlName]="'phone'" matInput type="tel"  placeholder="971749324">
+      <input [formControlName]="'phone'" matInput type="tel"  placeholder="9312323234">
       <span matPrefix>+380&nbsp;</span>
       <mat-icon matSuffix>phone</mat-icon>
       <mat-error *ngIf=" RegisterForm.controls['phone'].hasError('required')">
         Phone is <strong>required</strong>
       </mat-error>
-      <mat-error *ngIf=" RegisterForm.controls['phone'].hasError('minLength')||RegisterForm.controls['phone'].hasError('minLength') ">
-        Phone is <strong>8</strong> digits
+      <mat-error *ngIf=" RegisterForm.controls['phone'].hasError('pattern') ">
+        Phone is <strong>invalid</strong>
       </mat-error>
-      <mat-error *ngIf=" RegisterForm.controls['phone'].hasError('minLength')||RegisterForm.controls['phone'].hasError('maxLength') ">
-        Phone is <strong>8</strong> digits
-      </mat-error>
+
     </mat-form-field>
 
     <div class="button-wrapper">

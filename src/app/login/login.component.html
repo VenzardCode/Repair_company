@@ -4,6 +4,7 @@
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Email</mat-label>
       <input [formControlName]="'email'" type="email" matInput  placeholder="email@example.com"  >
+      <mat-icon matSuffix>alternate_email</mat-icon>
       <mat-error *ngIf=" LoginForm.controls['password'].hasError('required')">
         Password is <strong>required</strong>
       </mat-error>
