@@ -1,6 +1,7 @@
 
 import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -8,21 +9,38 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  public links:any[]=[
+  public  links:any[]=[]
+  public linksUnAuth:any[]=[
     {
-      link:'login',
+      action:()=>this.navigateTo('login'),
       view:'Login',
       index:0
     },
     {
-      link:'register',
+      action:()=>this.navigateTo('register'),
       view:'Register',
       index:1
     }
 
+
   ];
+  public linksAuth:any[]=[
+
+    {
+      action:()=>this.navigateTo('profile'),
+      view:'Profile',
+      index:0
+    },
+    {
+      action:()=>{this.authService.logout();this.navigateTo('login')},
+      view:'Log out',
+      index:1
+    }
+
+  ];
+
   activeLinkIndex = -1;
-  constructor(private router: Router) {
+  constructor(private router: Router,public authService: AuthService) {
 
   }
 
@@ -31,11 +49,21 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe((res) => {
       this.activeLinkIndex = this.links.indexOf(this.links.find(tab => tab.link === '.' + this.router.url));
+      this.updateLinks();
     });
   }
 
   public navigateTo(path: string): void {
     this.router.navigate([path]);
+
+  }
+  public updateLinks():void{
+    if (this.authService.isAuthenticated()){
+      this.links=this.linksAuth;
+    }
+    else {
+      this.links=this.linksUnAuth
+    }
   }
 }
 

@@ -3,18 +3,19 @@
   <form [formGroup]="RegisterForm"  (ngSubmit)="onSubmit()" class="example-form">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Name</mat-label>
-      <input [formControlName]="'name'" type="email" matInput placeholder="Ex. pat@example.com">
+      <input [formControlName]="'name'" matInput >
       <mat-error *ngIf=" RegisterForm.controls['name'].touched && RegisterForm.controls['name'].hasError('maxLength') ">
         Name is too <strong>long</strong>
       </mat-error>
-      <mat-error *ngIf="RegisterForm.controls['email'].touched && RegisterForm.controls['email'].hasError('required')">
+      <mat-error *ngIf="RegisterForm.controls['name'].touched && RegisterForm.controls['name'].hasError('required')">
         Name is <strong>required</strong>
       </mat-error>
     </mat-form-field>
+
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Email</mat-label>
       <input [formControlName]="'email'" type="email" matInput placeholder="Ex. pat@example.com">
-      <mat-error *ngIf=" RegisterForm.controls['email'].touched && RegisterForm.controls['email'].hasError('email') ">
+      <mat-error *ngIf=" RegisterForm.controls['email'].touched && RegisterForm.controls['email'].hasError('pattern') ">
         Please enter a valid email address
       </mat-error>
       <mat-error *ngIf="RegisterForm.controls['email'].touched && RegisterForm.controls['email'].hasError('required')">
@@ -44,6 +45,9 @@
       <mat-icon matSuffix>phone</mat-icon>
       <mat-error *ngIf=" RegisterForm.controls['phone'].hasError('required')">
         Phone is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf=" RegisterForm.controls['phone'].hasError('minLength')||RegisterForm.controls['phone'].hasError('minLength') ">
+        Phone is <strong>8</strong> digits
       </mat-error>
       <mat-error *ngIf=" RegisterForm.controls['phone'].hasError('minLength')||RegisterForm.controls['phone'].hasError('maxLength') ">
         Phone is <strong>8</strong> digits

@@ -9,8 +9,9 @@
       <mat-nav-list>
 
         <a  mat-list-item
+
             *ngFor="let route of links"
-            (click)="navigateTo(route.link)">
+            (click)="route.action()">
           {{route.view}}
         </a>
 

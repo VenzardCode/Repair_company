@@ -1,0 +1,29 @@
+<div class="wrapper">
+
+<mat-card class="profile-img">
+  <div class="avatar-wrapper" >
+    <img class="avatar"  mat-card-avatar src="https://s.gravatar.com/avatar/f1972f359dcd769b1f76ee6702998168?s=200">
+     <a class="avatar-button" mat-icon-button target="_blank" href="https://en.gravatar.com/emails/"><mat-icon >edit</mat-icon></a>
+  </div>
+
+</mat-card>
+<mat-card class="profile-info">
+  <div class="row">
+  <div class="col-1">Name</div>
+    <div class="col-2">{{this.user.name}}</div>
+  </div>
+  <mat-divider inset></mat-divider>
+
+  <div class="row">
+    <div class="col-1">Email</div>
+    <div class="col-2">{{this.user.email}}</div>
+  </div>
+  <mat-divider inset></mat-divider>
+
+  <div class="row">
+    <div class="col-1">Phone</div>
+    <div class="col-2">{{this.user.phone}}</div>
+  </div>
+
+</mat-card>
+</div>

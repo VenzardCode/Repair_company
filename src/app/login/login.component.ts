@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import { Router } from '@angular/router';
-import { HttpService } from '../http.service';
+import {Router} from '@angular/router';
+import {HttpService} from '../http.service';
 import {LoginForm} from "./login-form";
+import {AuthService} from '../auth/auth.service';
+import {ResultForm} from "../result-form";
 
 @Component({
   selector: 'app-login',
@@ -10,10 +12,12 @@ import {LoginForm} from "./login-form";
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent{
+export class LoginComponent {
   LoginForm;
   hide = true;
-  constructor(public httpService: HttpService,private formBuilder: FormBuilder,private router: Router) {
+  message!: string;
+
+  constructor(public httpService: HttpService, private formBuilder: FormBuilder, private router: Router, public authService: AuthService) {
     this.LoginForm = this.formBuilder.group({
       email: [''],
       password: ['']
@@ -33,16 +37,41 @@ export class LoginComponent{
       };
       this.httpService.loginSubmit(body).subscribe(res => {
         if (res) {
+
+          this.login(res);
           console.log(res);
 
         }
       }, error => {
-        console.log(error.error.error);
+        console.log(error);
       });
       console.log('Your form data : ', body);
     }
   }
-  public navigateTo(path:string):void{
+
+  public navigateTo(path: string): void {
     this.router.navigate([path])
   }
+
+
+
+
+  login(res:ResultForm) {
+
+    this.authService.login(res).subscribe(() => {
+      if (this.authService.isAuthenticated()) {
+        // Usually you would use the redirect URL from the auth service.
+        // However to keep the example simple, we will always redirect to `/admin`.
+        const redirectUrl = '/profile';
+
+        // Redirect the user
+        this.router.navigate([redirectUrl]);
+      }
+    });
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
 }
