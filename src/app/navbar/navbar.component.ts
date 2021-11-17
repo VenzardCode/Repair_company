@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationStart, Router} from '@angular/router';
 import {AuthService} from "../auth/auth.service";
 
 @Component({
@@ -49,14 +49,15 @@ export class NavbarComponent implements OnInit {
   activeLinkIndex = -1;
 
   constructor(private router: Router, public authService: AuthService) {
-
+    // this.updateLinks()
   }
 
 
   ngOnInit(): void {
     this.router.events.subscribe((res) => {
       this.activeLinkIndex = this.links.indexOf(this.links.find(tab => tab.link === '.' + this.router.url));
-      if (res.constructor.name === 'NavigationStart') {
+      if (res.constructor === NavigationStart) {
+
         this.updateLinks();
 
       }
