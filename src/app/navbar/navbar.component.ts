@@ -1,6 +1,5 @@
-
 import {Component, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {AuthService} from "../auth/auth.service";
 
 @Component({
@@ -9,47 +8,58 @@ import {AuthService} from "../auth/auth.service";
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  public  links:any[]=[]
-  public linksUnAuth:any[]=[
+  public links: any[] = []
+  public linksUnAuth: any[] = [
     {
-      action:()=>this.navigateTo('login'),
-      view:'Login',
-      index:0
+      action: () => this.navigateTo('login'),
+      view: 'Login',
+      index: 0
     },
     {
-      action:()=>this.navigateTo('register'),
-      view:'Register',
-      index:1
+      action: () => this.navigateTo('register'),
+      view: 'Register',
+      index: 1
     }
 
 
   ];
-  public linksAuth:any[]=[
+  public linksAuth: any[] = [
 
     {
-      action:()=>this.navigateTo('profile'),
-      view:'Profile',
-      index:0
+      action: () => this.navigateTo('profile'),
+      view: 'Profile',
+      index: 0
     },
     {
-      action:()=>{this.authService.logout();this.navigateTo('login')},
-      view:'Log out',
-      index:1
+      action: () => {
+        this.authService.logout();
+        this.navigateTo('login')
+      },
+      view: 'Log out',
+      index: 1
+    },
+    {
+      action: () => this.navigateTo('repair-order'),
+      view: 'Repair order',
+      index: 2
     }
 
   ];
 
   activeLinkIndex = -1;
-  constructor(private router: Router,public authService: AuthService) {
+
+  constructor(private router: Router, public authService: AuthService) {
 
   }
-
 
 
   ngOnInit(): void {
     this.router.events.subscribe((res) => {
       this.activeLinkIndex = this.links.indexOf(this.links.find(tab => tab.link === '.' + this.router.url));
-      this.updateLinks();
+      if (res.constructor.name === 'NavigationStart') {
+        this.updateLinks();
+
+      }
     });
   }
 
@@ -57,12 +67,12 @@ export class NavbarComponent implements OnInit {
     this.router.navigate([path]);
 
   }
-  public updateLinks():void{
-    if (this.authService.isAuthenticated()){
-      this.links=this.linksAuth;
-    }
-    else {
-      this.links=this.linksUnAuth
+
+  public updateLinks(): void {
+    if (this.authService.isAuthenticated()) {
+      this.links = this.linksAuth;
+    } else {
+      this.links = this.linksUnAuth
     }
   }
 }

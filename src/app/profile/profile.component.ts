@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from "../http.service";
 import {UserInterface} from "../auth/user-interface";
+import {OrderInfo} from "./order-info";
 
 @Component({
   selector: 'app-profile',
@@ -23,9 +24,21 @@ export class ProfileComponent implements OnInit {
 
     })
   }
+  displayedColumns: string[] = ['id', 'item', 'defect', 'time', 'status'];
+  dataSource!:any[];
 
 
-  ngOnInit(): void {
+  ngOnInit(){
+    this.httpService.getOrders().subscribe(res => {
+      this.dataSource = res.map((i:OrderInfo)=>({
+        id:i.id,
+        item:i.item,
+        defect:i.defect,
+        time:new Date(i.time).toLocaleString(),
+        status:i.status
+      }))
+      console.log(res);
+    })
   }
 
 }

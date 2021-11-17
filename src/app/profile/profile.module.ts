@@ -7,6 +7,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {AuthGuard} from "../auth/auth.guard";
+import {MatTableModule} from "@angular/material/table";
 
 
 const routes:Routes=[
@@ -24,7 +25,8 @@ const routes:Routes=[
     MatCardModule,
     MatDividerModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule
   ]
 })
 export class ProfileModule { }

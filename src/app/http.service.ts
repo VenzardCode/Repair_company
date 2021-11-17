@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import {LoginForm} from './login/login-form';
 import {RegisterForm} from './register/register-form';
 import {ResultForm} from './result-form';
+import {RepairForm} from './repair-order/form-repair';
 import {UserInterface} from "./auth/user-interface";
+import {OrderInfo} from "./profile/order-info";
 
 
 @Injectable({
@@ -27,6 +29,12 @@ export class HttpService {
   }
   public  logoutRequest():Observable<string>{
     return  this.http.get<string>('https://repair.firlin123.workers.dev/api/logout');
+  }
+  public repairOrderSubmit(form:RepairForm):Observable<string>{
+    return this.http.post<string>('https://production.repair.firlin123.workers.dev/api/newOrder', form);
+  }
+  public getOrders(): Observable<any>{
+    return this.http.get<OrderInfo>('https://production.repair.firlin123.workers.dev/api/myOrders');
   }
 
 

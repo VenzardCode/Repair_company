@@ -41,6 +41,11 @@ const routes: Routes=[
     canActivate: [AuthGuard],
   },
   {
+    path:'repair-order',
+    loadChildren: () => import('./repair-order/repair-order.module').then(m => m.RepairOrderModule),
+    canActivate: [AuthGuard],
+  },
+  {
     path:'main',
     loadChildren: () => import('./main/main.module').then(m => m.MainModule),
 
