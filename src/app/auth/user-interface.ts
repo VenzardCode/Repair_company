@@ -2,6 +2,6 @@ export interface UserInterface{
  email:string;
  name:string;
  phone:string;
-  emailValidationRequired:boolean;
+ emailValidationRequired:boolean;
  role:string;
 }

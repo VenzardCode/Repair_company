@@ -5,6 +5,7 @@ import {HttpService} from '../http.service';
 import {LoginForm} from "./login-form";
 import {AuthService} from '../auth/auth.service';
 import {ResultForm} from "../result-form";
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login',
@@ -16,18 +17,26 @@ export class LoginComponent {
   LoginForm;
   hide = true;
   message!: string;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-  constructor(public httpService: HttpService, private formBuilder: FormBuilder, private router: Router, public authService: AuthService) {
+  constructor(public httpService: HttpService, private formBuilder: FormBuilder, private router: Router, public authService: AuthService,private _snackBar: MatSnackBar) {
     this.LoginForm = this.formBuilder.group({
       email: ['',[Validators.required]],
       password: ['',[Validators.required]]
     });
   }
 
-
+  openSnackBar(message: string) {
+    this._snackBar.open(message,'',{
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: 5000
+    });
+  }
   onSubmit() {
     if (this.LoginForm.valid == false) {
-      console.log('Form not valid')
+      this.openSnackBar('Form not valid')
     } else {
       const body: LoginForm = {
         email: this.LoginForm.value.email,
@@ -37,13 +46,11 @@ export class LoginComponent {
         if (res) {
 
           this.login(res);
-          console.log(res);
 
         }
       }, error => {
-        console.log(error);
+        this.openSnackBar(error.error.error)
       });
-      console.log('Your form data : ', body);
     }
   }
 

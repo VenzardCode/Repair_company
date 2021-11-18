@@ -14,6 +14,7 @@ import {MatListModule} from "@angular/material/list";
 import { AuthGuard } from './auth/auth.guard';
 import { TokenInterceptor } from './auth/token.interceptor';
 import {UnauthGuard} from "./auth/unauth.guard";
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 const routes: Routes=[
@@ -59,10 +60,7 @@ const routes: Routes=[
 ]
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-  ],
+  declarations: [AppComponent, NavbarComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -72,7 +70,8 @@ const routes: Routes=[
     MatButtonModule,
     MatIconModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatSnackBarModule
   ],
   providers: [
     {

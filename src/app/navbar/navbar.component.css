@@ -7,7 +7,12 @@
   left: 0;
   right: 0;
 }
-
+.example-spacer {
+  flex: 1 1 auto;
+}
+.example-icon {
+  padding: 0 14px;
+}
 .example-is-mobile .example-toolbar {
   position: fixed;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */

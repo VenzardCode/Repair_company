@@ -31,18 +31,18 @@ export class NavbarComponent implements OnInit {
       index: 0
     },
     {
+      action: () => this.navigateTo('repair-order'),
+      view: 'Repair order',
+      index: 1
+    },
+    {
       action: () => {
         this.authService.logout();
         this.navigateTo('login')
       },
       view: 'Log out',
-      index: 1
-    },
-    {
-      action: () => this.navigateTo('repair-order'),
-      view: 'Repair order',
       index: 2
-    }
+    },
 
   ];
 

@@ -1,7 +1,7 @@
+import {Orders} from "./orders";
+import {DoneOrders} from "./done-orders";
+
 export interface OrderInfo{
-  id:number;
-  item:number;
-  defect:string;
-  time:number;
-  status:string;
+  Orders:Orders,
+  DoneOrders:DoneOrders
 }

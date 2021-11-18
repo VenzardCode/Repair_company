@@ -5,6 +5,10 @@ import {Router} from "@angular/router";
 import {RegisterForm} from "./register-form";
 import {ResultForm} from "../result-form";
 import {AuthService} from '../auth/auth.service';
+import {MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition
+} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -13,11 +17,12 @@ import {AuthService} from '../auth/auth.service';
 })
 export class RegisterComponent {
 
-
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
   hide = true;
   RegisterForm: FormGroup;
 
-  constructor(public httpService: HttpService, private formBuilder: FormBuilder, private router: Router,private authService: AuthService) {
+  constructor(public httpService: HttpService, private formBuilder: FormBuilder, private router: Router,private authService: AuthService,private _snackBar: MatSnackBar) {
     this.RegisterForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(40)]],
       email: ['', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
@@ -27,10 +32,16 @@ export class RegisterComponent {
 
   }
 
-
+  openSnackBar(message: string) {
+    this._snackBar.open(message,'',{
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: 5000
+    });
+  }
   onSubmit() {
     if (!this.RegisterForm.valid) {
-      console.log('Form not valid')
+      this.openSnackBar('Form not valid')
     } else {
       const body: RegisterForm = {
         name: this.RegisterForm.value.name,
@@ -41,13 +52,11 @@ export class RegisterComponent {
       this.httpService.registerSubmit(body).subscribe(res => {
         if (res) {
           this.login(res);
-          console.log(res);
 
         }
       }, error => {
-        console.log(error);
+        this.openSnackBar(error.error.error)
       });
-      console.log('Your form data : ', body);
     }
   }
 
