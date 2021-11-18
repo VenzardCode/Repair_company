@@ -3,7 +3,7 @@ import {Observable, of} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {ResultForm} from "../result-form";
 import {HttpService} from "../http.service";
-import {Router} from "@angular/router";
+import {ifStmt} from "@angular/compiler/src/output/output_ast";
 
 
 @Injectable({
@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 })
 export class AuthService {
 
-  constructor(public httpService: HttpService,private router: Router) {
+  constructor(public httpService: HttpService) {
     this.isAuthenticated()
   }
 
@@ -20,8 +20,6 @@ export class AuthService {
 
   login(res: ResultForm): Observable<boolean> {
     localStorage.setItem('token', res.token)
-    localStorage.setItem('role', res.role)
-
     if ('expirationTtl' in res) {
       const rez = Date.now() + (res.expirationTtl ?? 0) * 1000;
       localStorage.setItem('tokenExp', rez.toString());
@@ -32,20 +30,24 @@ export class AuthService {
   }
 
   logout(): void {
-    this.httpService.logoutRequest().subscribe();
-    localStorage.removeItem('role');
-    localStorage.removeItem('token');
-    localStorage.removeItem('tokenExp');
-    this.navigateTo('login');
+    this.httpService.logoutRequest().subscribe(res => {
+      if (res) {
 
+        console.log(res);
+
+      }
+    }, error => {
+      console.log(error.error.error);
+    });
+
+    localStorage.removeItem('token')
+    localStorage.removeItem('tokenExp');
   }
 
   public getToken(): string {
     return localStorage.getItem('token') ?? '';
   }
-  public getRole(): string {
-    return localStorage.getItem('role') ?? 'user';
-  }
+
   public getTokenExp(): number {
     return parseInt(localStorage.getItem('tokenExp') ?? '0');
   }
@@ -58,16 +60,13 @@ export class AuthService {
     // get the token
     const token = this.getToken();
     const exp = this.getTokenExp();
-
     // return a boolean reflecting
     // whether or not the token is expired
-
+    console.log(exp, token);
+    // console.trace();
     if (!(this.tokenNotExpired(exp))) {
       this.logout()
     }
     return token === '' ? false : this.tokenNotExpired(exp);
-  }
-  public navigateTo(path: string): void {
-    this.router.navigate([path])
   }
 }
