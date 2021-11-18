@@ -19,16 +19,28 @@
 .mat-icon{
   color: white;
 }
-.profile-img{
+.left-wrapper{
   width: 20rem;
+}
+.profile-img{
   margin-bottom: 1rem;
   margin-top: 1rem;
   margin-left: 1rem;
 }
-.profile-info{
-  margin: 1rem;
+.right-wrapper{
   flex: 1;
+}
+.profile-info{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
   align-self: flex-start;
+}
+.profile-order-info{
+ margin: 1rem;
+}
+.profile-order-info>table{
+  width: 100%;
 }
 .row{
   display: flex;

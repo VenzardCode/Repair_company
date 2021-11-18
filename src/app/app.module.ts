@@ -59,10 +59,7 @@ const routes: Routes=[
 ]
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-  ],
+  declarations: [AppComponent, NavbarComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

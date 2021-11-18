@@ -6,7 +6,10 @@ import {RegisterForm} from './register/register-form';
 import {ResultForm} from './result-form';
 import {RepairForm} from './repair-order/form-repair';
 import {UserInterface} from "./auth/user-interface";
-import {OrderInfo} from "./profile/order-info";
+import {MyOrders} from "./profile/my-orders";
+import {OrdersInfo} from "./profile/orders-info";
+import {Orders} from "./profile/orders";
+import {RepairFinishForm} from "./modal/repair-finish-form";
 
 
 @Injectable({
@@ -34,8 +37,15 @@ export class HttpService {
     return this.http.post<string>('https://production.repair.firlin123.workers.dev/api/newOrder', form);
   }
   public getOrders(): Observable<any>{
-    return this.http.get<OrderInfo>('https://production.repair.firlin123.workers.dev/api/myOrders');
+    return this.http.get<Orders>('https://production.repair.firlin123.workers.dev/api/myOrders');
   }
-
-
+  public getNewOrders(): Observable<any>{
+    return this.http.get<OrdersInfo>('https://production.repair.firlin123.workers.dev/api/worker/orders');
+  }
+  public repairOrderFinishSubmit(form:RepairFinishForm):Observable<string>{
+    return this.http.post<string>('https://production.repair.firlin123.workers.dev/api/worker/orderDone', form);
+  }
+  public getOrderSubmit(id:number):Observable<MyOrders>{
+    return this.http.post<MyOrders>('https://production.repair.firlin123.workers.dev/api/worker/orderAccept', id);
+  }
 }

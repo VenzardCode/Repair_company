@@ -4,6 +4,7 @@ import {tap} from 'rxjs/operators';
 import {ResultForm} from "../result-form";
 import {HttpService} from "../http.service";
 import {ifStmt} from "@angular/compiler/src/output/output_ast";
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -11,7 +12,7 @@ import {ifStmt} from "@angular/compiler/src/output/output_ast";
 })
 export class AuthService {
 
-  constructor(public httpService: HttpService) {
+  constructor(public httpService: HttpService,private router: Router) {
     this.isAuthenticated()
   }
 
@@ -20,6 +21,8 @@ export class AuthService {
 
   login(res: ResultForm): Observable<boolean> {
     localStorage.setItem('token', res.token)
+    localStorage.setItem('role', res.role)
+
     if ('expirationTtl' in res) {
       const rez = Date.now() + (res.expirationTtl ?? 0) * 1000;
       localStorage.setItem('tokenExp', rez.toString());
@@ -39,15 +42,19 @@ export class AuthService {
     }, error => {
       console.log(error.error.error);
     });
-
-    localStorage.removeItem('token')
+    localStorage.removeItem('role');
+    localStorage.removeItem('token');
     localStorage.removeItem('tokenExp');
+    this.navigateTo('login');
+
   }
 
   public getToken(): string {
     return localStorage.getItem('token') ?? '';
   }
-
+  public getRole(): string {
+    return localStorage.getItem('role') ?? 'user';
+  }
   public getTokenExp(): number {
     return parseInt(localStorage.getItem('tokenExp') ?? '0');
   }
@@ -60,6 +67,7 @@ export class AuthService {
     // get the token
     const token = this.getToken();
     const exp = this.getTokenExp();
+
     // return a boolean reflecting
     // whether or not the token is expired
     console.log(exp, token);
@@ -68,5 +76,8 @@ export class AuthService {
       this.logout()
     }
     return token === '' ? false : this.tokenNotExpired(exp);
+  }
+  public navigateTo(path: string): void {
+    this.router.navigate([path])
   }
 }
